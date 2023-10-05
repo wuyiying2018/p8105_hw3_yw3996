@@ -1,0 +1,12 @@
+---
+title: "p8105_hw3_yw3996"
+author: "Yiying Wu"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1
+
