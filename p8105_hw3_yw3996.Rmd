@@ -6,12 +6,66 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+
+knitr::opts_chunk$set(
+  fig.width = 6,
+  fig.asp = .6,
+  out.width = "90%"
+)
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
 ```
 
-## 1
+## 1. Instacart data
 load the data from the p8105.datasets using:
-```{r}
+```{r,include=TRUE,results = 'hide',warning = FALSE, message = FALSE}
 library(p8105.datasets)
 data("instacart")
+instacart=instacart
+```
+Description of the dataset:
+
+* This dataset contains `r nrow(instacart)` rows and `r ncol(instacart)` columns, with each row resprenting a single product from an instacart order. 
+* Variables include 
+  
+  * `order_id`: order identifier
+  * `product_id`: product identifier
+  * `add_to_cart_order`: order in which each product was added to cart
+  * `reordered`: 1 if this prodcut has been ordered by this user in the past, 0 otherwise
+  * `user_id`: customer identifier
+  * `eval_set`: which evaluation set this order belongs in (Note that the data for use in this class is exclusively from the “train” eval_set)
+  * `order_number`: the order sequence number for this user (1=first, n=nth)
+  * `order_dow`: the day of the week on which the order was placed
+  * `order_hour_of_day`: the hour of the day on which the order was placed
+  * `days_since_prior_order`: days since the last order, capped at 30, NA if order_number=1
+  * `product_name`: name of the product
+  * `aisle_id`: aisle identifier
+  * `department_id`: department identifier
+  * `aisle`: the name of the aisle
+  * `department`: the name of the department
+
+### Count the number of aisles and the aisles with most items ordered
+Count the number of aisles in the dataset:
+```{r}
+n_distinct(instacart$aisle)
 ```
 
+Count the number of orders in each aisle and sort by descending order:
+```{r}
+instacart |>
+  group_by(aisle) |>
+  summarize(n_obs = n())|>
+  arrange(desc(n_obs))
+```
+Therefore, there are `r n_distinct(instacart$aisle)` aisles. The most items are ordered from fresh vegetables aisles.
+
+### Plot: 
