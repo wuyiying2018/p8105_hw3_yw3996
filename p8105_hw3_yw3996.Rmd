@@ -32,7 +32,7 @@ library(p8105.datasets)
 data("instacart")
 instacart=instacart
 ```
-Description of the dataset:
+### Description of the dataset
 
 * This dataset contains `r nrow(instacart)` rows and `r ncol(instacart)` columns, with each row resprenting a single product from an instacart order. 
 * Variables include 
@@ -119,7 +119,7 @@ data("BRFSS")
 brfss=brfss_smart2010
 ```
 
-First, do some data cleaning:
+### data cleaning
 
 * format the data to use appropriate variable names;
 * focus on the “Overall Health” topic
@@ -132,21 +132,46 @@ brfss=brfss|>
   janitor::clean_names()
 unique(brfss$response)
 ```
-The responses should be included are "Excellent", "Very good",  "Good", "Fair", "Poor", "Good or Better Health", "Fair or Poor Health".
+The responses should be included are "Excellent", "Very good",  "Good", "Fair", "Poor".
 
-The order should be "Poor", "Fair or Poor Health", "Fair", "Good", "Good or Better Health", "Very good", "Excellent"
+The order should be "Poor", "Fair", "Good", "Very good", "Excellent"
 
 ```{r}
 brfss=brfss|>
-  filter(response %in% c("Poor", "Fair or Poor Health", 
-                         "Fair", "Good", 
-                         "Good or Better Health", "Very good", 
-                         "Excellent"))|>
+  filter(
+    topic=="Overall Health",
+    response %in% c("Poor", "Fair", "Good", 
+                    "Very good", "Excellent"))|>
   mutate(
-    response=factor(response, levels=c("Poor", "Fair or Poor Health", 
-                                       "Fair", "Good", 
-                                       "Good or Better Health", "Very good", 
-                                       "Excellent"))
+    response=factor(response, levels=c("Poor", "Fair", "Good", 
+                                       "Very good", "Excellent"))
   )
 ```
 
+### result
+
+* In 2002, which states were observed at 7 or more locations? What about in 2010?
+
+states were observed at 7 or more locations in 2002 are: 
+```{r}
+brfss|>
+  filter(year==2002)|>
+  group_by(locationabbr)|>
+  summarize(n_obs = n_distinct(locationdesc))|>
+  filter(n_obs>=7)
+```
+CT, FL, MA, NC, NJ, PA were observed at 7 or more locations in 2002.
+
+states were observed at 7 or more locations in 2010 are:
+```{r}
+brfss|>
+  filter(year==2010)|>
+  group_by(locationabbr)|>
+  summarize(n_obs = n_distinct(locationdesc))|>
+  filter(n_obs>=7)
+```
+
+CA, CO, FL, MA, MD, NC, NE, NJ, NY, OH, PA, SC, TX, WA were observed at 7 or more locations in 2010.
+
+* Construct a dataset that is limited to Excellent responses, and contains, year, state, and a variable that averages the data_value across locations within a state. Make a “spaghetti” plot of this average value over time within a state (that is, make a plot showing a line for each state across years – the geom_line geometry and group aesthetic will help).
+* Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
