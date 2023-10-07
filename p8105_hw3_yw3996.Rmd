@@ -110,4 +110,16 @@ instacart |>
     values_from = "mean_hour")|>
   knitr::kable(digits = 2)
 ```
+## 2. BRFSS data
+load the data from the p8105.datasets using:
+```{r,include=TRUE,results = 'hide',warning = FALSE, message = FALSE}
+data("BRFSS")
+brfss=brfss_smart2010
+```
 
+First, do some data cleaning:
+
+* format the data to use appropriate variable names;
+* focus on the “Overall Health” topic
+* include only responses from “Excellent” to “Poor”
+* organize responses as a factor taking levels ordered from “Poor” to “Excellent”
