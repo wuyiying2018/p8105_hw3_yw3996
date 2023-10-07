@@ -183,8 +183,9 @@ dat = brfss|>
 ### spaghetti plot
 ```{r, fig.width = 8}
 dat|>
+  rename("state"="locationabbr")|>
   ggplot(aes(x = year, y = data_value_mean, 
-             color = locationabbr)) + 
+             color =state )) + 
   geom_point() + geom_line() + 
   theme(legend.position = "bottom")+
   guides(color = guide_legend(nrow = 5))
