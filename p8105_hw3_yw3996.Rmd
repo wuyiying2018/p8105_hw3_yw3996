@@ -88,7 +88,9 @@ instacart |>
 the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits” with the number of times each item is ordered
 ```{r}
 instacart |> 
-  filter(aisle %in% c("baking ingredients", "dog food care", "packaged vegetables fruits")) |>
+  filter(aisle %in% c("baking ingredients", 
+                      "dog food care", 
+                      "packaged vegetables fruits")) |>
   group_by(aisle) |> 
   count(product_name) |> 
   mutate(rank = min_rank(desc(n))) |> 
@@ -123,3 +125,28 @@ First, do some data cleaning:
 * focus on the “Overall Health” topic
 * include only responses from “Excellent” to “Poor”
 * organize responses as a factor taking levels ordered from “Poor” to “Excellent”
+
+list all the value of response column:
+```{r}
+brfss=brfss|>
+  janitor::clean_names()
+unique(brfss$response)
+```
+The responses should be included are "Excellent", "Very good",  "Good", "Fair", "Poor", "Good or Better Health", "Fair or Poor Health".
+
+The order should be "Poor", "Fair or Poor Health", "Fair", "Good", "Good or Better Health", "Very good", "Excellent"
+
+```{r}
+brfss=brfss|>
+  filter(response %in% c("Poor", "Fair or Poor Health", 
+                         "Fair", "Good", 
+                         "Good or Better Health", "Very good", 
+                         "Excellent"))|>
+  mutate(
+    response=factor(response, levels=c("Poor", "Fair or Poor Health", 
+                                       "Fair", "Good", 
+                                       "Good or Better Health", "Very good", 
+                                       "Excellent"))
+  )
+```
+
