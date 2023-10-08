@@ -220,3 +220,28 @@ demographic=read_csv("./data/nhanes_covar.csv",skip = 4)
 accelerometer=read_csv("./data/nhanes_accel.csv")
 ```
 
+### data cleaning
+clean `demographic` dataset:
+
+* include all originally observed variables; 
+* exclude participants less than 21 years of age, and those with missing demographic data; and 
+* encode data with reasonable variable classes
+```{r}
+demographic=demographic|>
+  drop_na()|>
+  filter(age>=21)|>
+  mutate(
+     sex=case_match(
+       sex,
+       1~"male",
+       2~"female"),
+     education=case_match(
+       education,
+       1~"Less than high school",
+       2~"High school equivalent",
+       3~"More than high school"
+     )
+  )
+```
+
+clean `accelerometer` data
