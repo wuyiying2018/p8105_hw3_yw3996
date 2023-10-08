@@ -216,7 +216,7 @@ plot_2006 + plot_2010
 ## 3. Accelerometer data
 import dataset
 ```{r, include=TRUE,results = 'hide',warning = FALSE, message = FALSE}
-demographic=read_csv("./data/nhanes_covar.csv")
+demographic=read_csv("./data/nhanes_covar.csv",skip = 4)
 accelerometer=read_csv("./data/nhanes_accel.csv")
 ```
 
