@@ -242,7 +242,11 @@ demographic=demographic|>
        1~"Less than high school",
        2~"High school equivalent",
        3~"More than high school"
-     )
+     ),
+     education=factor(education, levels=c(
+       "Less than high school",
+       "High school equivalent",
+       "More than high school"))
   )
 ```
 
@@ -267,4 +271,16 @@ dat_3=
   inner_join(demographic,accelerometer,by="seqn")
 ```
 
-table for the number of men and women in each education category, and create a visualization of the age distributions for men and women in each education category. Comment on these items.
+### table for the number of men and women in each education category
+```{r}
+dat_3|>
+  group_by(sex,education) |> 
+  summarize(n_obs = n_distinct(seqn)) |> 
+  pivot_wider(names_from = education, values_from = n_obs)|>
+  knitr::kable()
+```
+### visualization of the age distributions for men and women in education category
+
+
+
+ Comment on these items.
