@@ -336,5 +336,9 @@ dat_3|>
   facet_grid(.~education)
 ```
 
-Accelerometer data allows the inspection activity over the course of the day. Make a three-panel plot that shows the 24-hour activity time courses for each education level and use color to indicate sex. Describe in words any patterns or conclusions you can make based on this graph; including smooth trends may help identify differences.
+Comments:
 
+* Overall, both females and males tend to have higher MIMS values from 8:30 to 20:00 (i.e. 510~1200 minute) in all education groups.
+* MIMS values will increase dramatically since 4:00, and reach the peak at around 8:30. Then it will decrease slightly from 8:30 to 20:00, and drop dramatically after 20:00.
+* Both females and males tend to have higher peak MIMS values  within the 'Less than high school' education category compared to the other two education categories. This suggests that educational attainment may be associated with differences in peak MIMS values, with lower education levels potentially correlating with higher peak MIMS scores.
+* For "High school equivalent" and "More than high school" groups, females tend to have higher MIMS values than males from 8:30 to 20:00 while MIMS values are similar between genders in 'Less than high school' education category.
