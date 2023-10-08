@@ -311,3 +311,12 @@ female_edu + male_edu
 ```
 Comments: 
 
+* Among both genders, the age distributions for "More than high school" education category are right-skewed, while age distributions for "Less than high school" education category are left-skewed, indicating that young people tend to have higher education levels.
+* The difference of the distributions among education categories for female is more significant than that of male group. This suggests that gender may play a role in shaping educational attainment patterns, with females showing a greater variation in age across education levels.
+
+
+### analysis total activity variable for each participant
+Traditional analyses of accelerometer data focus on the total activity over the day. Using your tidied dataset, aggregate across minutes to create a total activity variable for each participant. Plot these total activities (y-axis) against age (x-axis); your plot should compare men to women and have separate panels for each education level. Include a trend line or a smooth to illustrate differences. Comment on your plot.
+
+Accelerometer data allows the inspection activity over the course of the day. Make a three-panel plot that shows the 24-hour activity time courses for each education level and use color to indicate sex. Describe in words any patterns or conclusions you can make based on this graph; including smooth trends may help identify differences.
+
