@@ -286,28 +286,14 @@ Comments:
 * The counts in "Less than high school" category are close, with 28 females and 27 males. 
 
 ### visualization of the age distributions for men and women in education category
-```{r,fig.width = 12, fig.asp = .4}
-female_edu=
-  dat_3 |> 
-  filter(sex=="female") |> 
-  group_by(education,seqn)|>
-  distinct(seqn,sex,age,education)|>
-  ggplot(aes(x = age, fill = education)) + 
-  geom_density(alpha = .5) + 
-  labs(title = "Female") +
-  theme(legend.position = "none")
-
-male_edu=
-  dat_3 |> 
-  filter(sex=="male") |> 
+```{r}
+dat_3 |> 
   group_by(education,seqn)|>
   distinct(seqn,sex,age,education)|>
   ggplot(aes(x = age, fill = education)) + 
   labs(title = "Male") +
   geom_density(alpha = .5) +
-  theme(legend.position = "bottom")
-
-female_edu + male_edu
+  facet_grid(.~sex)
 ```
 Comments: 
 
@@ -316,6 +302,23 @@ Comments:
 
 
 ### analysis total activity variable for each participant
+create a total activity variable for each participant
+```{r}
+total_act=dat_3|>
+  group_by(seqn,sex,age,bmi,education)|>
+  summarise(total_activity=sum(mims_value))
+```
+Plot these total activities (y-axis) against age (x-axis)
+```{r}
+total_act|>
+  ggplot(aes(x = age, y = total_activity, color = sex)) + 
+  geom_point(alpha = .75)+
+  geom_smooth()+
+  facet_grid(.~education)
+```
+
+
+
 Traditional analyses of accelerometer data focus on the total activity over the day. Using your tidied dataset, aggregate across minutes to create a total activity variable for each participant. Plot these total activities (y-axis) against age (x-axis); your plot should compare men to women and have separate panels for each education level. Include a trend line or a smooth to illustrate differences. Comment on your plot.
 
 Accelerometer data allows the inspection activity over the course of the day. Make a three-panel plot that shows the 24-hour activity time courses for each education level and use color to indicate sex. Describe in words any patterns or conclusions you can make based on this graph; including smooth trends may help identify differences.
