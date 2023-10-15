@@ -252,6 +252,31 @@ Comments:
 * The "Good" responses in 2010 have smaller variation compared to those in 2002.
 * The "Very Good" responses in 2010 have a higher median and larger variation compared to those in 2002.
 
+two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) in different  locations in NY State.
+
+```{r}
+plot_2006=
+  brfss |>
+  filter(locationabbr=="NY",year==2006)|>
+  ggplot(aes(x =locationdesc , y = data_value,fill=response)) + 
+  geom_bar(position="dodge",stat="identity") +  
+  labs(title = "Distribution of data_value in NY State in 2006") + 
+  theme(plot.title = element_text(size = 10), axis.text.x = element_text(angle = 20, hjust = 1),legend.position = "none") 
+
+plot_2010=
+  brfss |>
+  filter(locationabbr=="NY",year==2010)|>
+  ggplot(aes(x =locationdesc , y = data_value,fill=response)) + 
+  geom_bar(position="dodge",stat="identity") +  
+  labs(title = "Distribution of data_value in NY State in 2010") +
+  theme(plot.title = element_text(size = 10), axis.text.x = element_text(angle = 20, hjust = 1))
+
+plot_2006 + plot_2010
+```
+Comments:
+
+There are 6 counties responded in 2006, while 9 counties in 2010. The overall distribution seems consistent between two years, while there is variation among counties.
+
 ## 3. Accelerometer data
 import dataset
 ```{r, include=TRUE,results = 'hide',warning = FALSE, message = FALSE}
