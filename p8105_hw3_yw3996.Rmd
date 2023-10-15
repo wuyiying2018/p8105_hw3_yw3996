@@ -83,6 +83,9 @@ instacart |>
   labs(title = "Number of items ordered in each aisle") +
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
+Comments:
+
+The bar chart depicted above illustrates the quantity of items requested from various store aisles, specifically focusing on those aisles with an order count exceeding 10,000 items. The aisles have been organized in a descending order according to their respective item counts, simplifying the identification of the most frequented sections. The fresh vegetables aisle emerges as the most popular, boasting the highest item order count, followed by the fresh fruits and packaged vegetables fruits sections. Conversely, aisles like oils vinegars, dry pasta, canned meals beans, and butter exhibit the lowest order counts among the ones presented. Nonetheless, even these less popular sections still manage to accumulate more than 10,000 orders.
 
 ### Table 1 
 the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits” with the number of times each item is ordered
@@ -98,6 +101,27 @@ instacart |>
   arrange(desc(n)) |>
   knitr::kable()
 ```
+Comments:
+
+This table provides information on the top-ranked products within various categories in a store. 
+
+* Packaged Vegetables & Fruits:
+
+  * Organic Baby Spinach: This product is the most popular in the "Packaged Vegetables Fruits" category, with a substantial count of 9784. It's evident that customers prefer healthy, organic greens.
+  * Organic Raspberries: Ranked second, "Organic Raspberries" also enjoys significant popularity with 5546 purchases.
+  * Organic Blueberries: "Organic Blueberries" holds the third position, highlighting the appeal of organic fruits among shoppers.
+
+* Baking Ingredients:
+
+  * Light Brown Sugar: In the "Baking Ingredients" category, "Light Brown Sugar" tops the list with 499 purchases. It's a staple for baking enthusiasts.
+  * Pure Baking Soda: "Pure Baking Soda" is the second most purchased product within this category, reflecting its importance in baking.
+  * Cane Sugar: While "Cane Sugar" ranks third, it still enjoys a notable 336 purchases, indicating the demand for various sweeteners in baking.
+
+* Dog Food Care:
+
+  * Snack Sticks Chicken & Rice Recipe Dog Treats: This product is the most popular in the "Dog Food Care" category, showing that pet owners prioritize treats for their dogs.
+  * Organix Chicken & Brown Rice Recipe: Ranked second, "Organix Chicken & Brown Rice Recipe" caters to health-conscious pet owners.
+  * Small Dog Biscuits: This product is the third most purchased, demonstrating that even small dog breeds have their specific dietary needs.
 
 ### Table 2 
 the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are ordered on each day of the week; format this table for human readers (i.e. produce a 2 x 7 table).
@@ -106,12 +130,26 @@ the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are orde
 instacart |>
   filter(product_name %in% c("Pink Lady Apples", "Coffee Ice Cream")) |>
   group_by(product_name, order_dow) |>
-  summarize(mean_hour = mean(order_hour_of_day),na.rm=TRUE) |>
+  summarize(mean_hour = mean(order_hour_of_day,na.rm=TRUE),.groups="drop") |>
+  mutate(order_dow = case_when(
+    order_dow == 0 ~ "Monday",
+    order_dow == 1 ~ "Tuesday",
+    order_dow == 2 ~ "Wednesday",
+    order_dow == 3 ~ "Thursday",
+    order_dow == 4 ~ "Friday",
+    order_dow == 5 ~ "Saturday",
+    order_dow == 6 ~ "Sunday"
+  ))|>
   pivot_wider(
     names_from = "order_dow", 
     values_from = "mean_hour")|>
   knitr::kable(digits = 2)
 ```
+
+Comments:
+
+The table presents the typical ordering times for "Coffee Ice Cream" and "Pink Lady Apples" throughout the week. In the case of "Coffee Ice Cream," the mean order time falls within the early to mid-afternoon range for all days. It commences at approximately 1:45 PM on Monday and reaches its latest around 3:30 PM on Thursday. Conversely, "Pink Lady Apples" consistently exhibit an average ordering time in the early afternoon for the entire week. This timing begins at roughly 11:30 AM on Tuesday and experiences slight variations but generally remains within the early to mid-afternoon timeframe for the remaining days.
+
 ## 2. BRFSS data
 load the data from the p8105.datasets using:
 ```{r,include=TRUE,results = 'hide',warning = FALSE, message = FALSE}
