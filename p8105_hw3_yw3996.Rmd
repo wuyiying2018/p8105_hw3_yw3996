@@ -106,7 +106,7 @@ the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are orde
 instacart |>
   filter(product_name %in% c("Pink Lady Apples", "Coffee Ice Cream")) |>
   group_by(product_name, order_dow) |>
-  summarize(mean_hour = mean(order_hour_of_day)) |>
+  summarize(mean_hour = mean(order_hour_of_day),na.rm=TRUE) |>
   pivot_wider(
     names_from = "order_dow", 
     values_from = "mean_hour")|>
@@ -232,7 +232,7 @@ clean `demographic` dataset:
 ```{r}
 demographic=demographic|>
   drop_na()|>
-  filter(age>=21)|>
+  filter(age>=21,!is.na(sex), !is.na(age), !is.na(bmi), !is.na(education))|>
   mutate(
      sex=case_match(
        sex,
