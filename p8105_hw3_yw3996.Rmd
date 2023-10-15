@@ -254,7 +254,7 @@ Comments:
 
 two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) in different  locations in NY State.
 
-```{r}
+```{r, fig.width = 9}
 plot_2006=
   brfss |>
   filter(locationabbr=="NY",year==2006)|>
